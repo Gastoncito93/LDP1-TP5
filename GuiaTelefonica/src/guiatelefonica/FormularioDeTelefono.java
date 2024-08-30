@@ -1,20 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package guiatelefonica;
 
-/**
- *
- * @author Usuario
- */
-public class FormularioDeTelefono extends javax.swing.JFrame {
+import java.util.TreeMap;
+import javax.swing.JOptionPane;
 
-    /**
-     * Creates new form FormularioDeTelefono
-     */
-    public FormularioDeTelefono() {
+public class FormularioDeTelefono extends javax.swing.JFrame {
+    
+   private TreeMap<Long, Contacto> contactos;
+   
+   public FormularioDeTelefono() {
+        this.contactos = new TreeMap<>();
+        initComponents(); // Método para inicializar componentes del formulario
+    }
+
+    public FormularioDeTelefono(TreeMap<Long, Contacto> contactos) {
+        this.contactos = contactos;
+        this.
         initComponents();
+        agregarContacto();
+        buscarContacto();
+        buscarTelefono();
+        buscarContactos();
+        buscarTelefono();
+        
     }
 
     /**
@@ -226,7 +233,12 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jTNombreActionPerformed
 
     private void jBNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBNuevoActionPerformed
-        // TODO add your handling code here:
+        jTdni.setText("");
+        jTNombre.setText("");
+        jTApellido.setText("");
+        jTDireccion.setText("");
+        jTCiudad.setText("");
+        jTTelefono.setText("");
     }//GEN-LAST:event_jBNuevoActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
@@ -234,7 +246,7 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
-        // TODO add your handling code here:
+        agregarContacto();
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
@@ -301,4 +313,44 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     private javax.swing.JTextField jTTelefono;
     private javax.swing.JTextField jTdni;
     // End of variables declaration//GEN-END:variables
+    
+    private void agregarContacto(){
+         try {
+        // Obtener datos del formulario
+        String nombre = jTNombre.getText();
+        String apellido = jTApellido.getText();
+        String direccion = jTDireccion.getText();
+        String ciudad = jTCiudad.getText();
+        String dni = jTdni.getText();
+        Long telefono = Long.parseLong(jTTelefono.getText());  // Obtener el teléfono como Long
+
+        // Crear un nuevo contacto
+        Contacto nuevoContacto = new Contacto(dni, nombre, apellido, ciudad, direccion);
+
+        // Verificar si el contacto con ese teléfono ya existe
+        if (contactos.containsKey(telefono)) {
+            // Aquí puedes mostrar un mensaje diciendo que el contacto ya existe
+            JOptionPane.showMessageDialog(null, "El contacto con teléfono " + telefono + " ya existe.");
+        } else {
+            // Agregar el contacto al TreeMap
+            contactos.put(telefono, nuevoContacto);
+            JOptionPane.showMessageDialog(null, "Contacto agregado exitosamente.");
+        }
+    } catch (NumberFormatException e) {
+        // Manejar error si los campos numéricos no contienen datos válidos
+        JOptionPane.showMessageDialog(null, "Error al agregar contacto: " + e.getMessage());
+    }
+    }
+    private void buscarContacto(){
+        
+    }
+    
+    private void buscarTelefono(){
+        
+    }
+    
+    private void buscarContactos(){
+        
+    }
 }
+
