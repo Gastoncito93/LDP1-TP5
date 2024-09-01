@@ -242,7 +242,7 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jBNuevoActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        // TODO add your handling code here:
+        buscarContacto();
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
@@ -250,7 +250,13 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
-        // TODO add your handling code here:
+        borrarContacto();
+        jTdni.setText("");
+        jTNombre.setText("");
+        jTApellido.setText("");
+        jTDireccion.setText("");
+        jTCiudad.setText("");
+        jTTelefono.setText("");
     }//GEN-LAST:event_jBBorrarActionPerformed
 
     private void jBSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBSalirActionPerformed
@@ -322,7 +328,7 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
         String direccion = jTDireccion.getText();
         String ciudad = jTCiudad.getText();
         String dni = jTdni.getText();
-        Long telefono = Long.parseLong(jTTelefono.getText());  // Obtener el teléfono como Long
+        Long telefono = Long.valueOf(jTTelefono.getText());  // Obtener el teléfono como Long
 
         // Crear un nuevo contacto
         Contacto nuevoContacto = new Contacto(dni, nombre, apellido, ciudad, direccion);
@@ -341,8 +347,53 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Error al agregar contacto: " + e.getMessage());
     }
     }
+    
+    private void borrarContacto() {
+    try {
+        // Obtener el teléfono ingresado
+        Long telefono = Long.valueOf(jTTelefono.getText());
+
+        // Verificar si el contacto con ese teléfono existe
+        if (contactos.containsKey(telefono)) {
+            // Eliminar el contacto del TreeMap
+            contactos.remove(telefono);
+            JOptionPane.showMessageDialog(null, "Contacto eliminado exitosamente.");
+        } else {
+            // Mostrar mensaje si no existe el contacto
+            JOptionPane.showMessageDialog(null, "No existe un contacto con el teléfono " + telefono + ".");
+        }
+    } catch (NumberFormatException e) {
+        // Manejar error si el teléfono ingresado no es válido
+        JOptionPane.showMessageDialog(null, "Error al eliminar contacto: " + e.getMessage());
+    }
+}
+    
     private void buscarContacto(){
-        
+        try {
+        // Obtener el número de teléfono ingresado
+        Long telefono = Long.valueOf(jTTelefono.getText());
+
+        // Buscar el contacto en el TreeMap
+        Contacto contacto = contactos.get(telefono);
+
+        if (contacto != null) {
+            // Mostrar los datos del contacto en los campos correspondientes
+            jTNombre.setText(contacto.getNombre());
+            jTApellido.setText(contacto.getApellido());
+            jTDireccion.setText(contacto.getDireccion());
+            jTCiudad.setText(contacto.getCiudad());
+            jTdni.setText(contacto.getDni());
+
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(null, "Contacto encontrado.");
+        } else {
+            // Mostrar mensaje si no se encontró el contacto
+            JOptionPane.showMessageDialog(null, "No existe un contacto con el teléfono " + telefono + ".");
+        }
+    } catch (NumberFormatException e) {
+        // Manejar error si el teléfono ingresado no es válido
+        JOptionPane.showMessageDialog(null, "Error al buscar contacto: " + e.getMessage());
+    }
     }
     
     private void buscarTelefono(){
