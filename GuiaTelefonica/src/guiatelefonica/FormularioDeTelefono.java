@@ -1,5 +1,8 @@
 package guiatelefonica;
 
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import javax.swing.JOptionPane;
 
@@ -19,7 +22,7 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
         buscarContacto();
         buscarTelefono();
         buscarContactos();
-        buscarTelefono();
+        
         
     }
 
@@ -241,20 +244,18 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jBNuevoActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        
-        String apellido = jTApellido.getText();
-        Long telefono = Long.valueOf(jTTelefono.getText());
-        
-        Contacto contacto = contactos.get(apellido);
-        
-        if(contacto == null){
-            buscarContacto();
-        }else{
-            buscarTelefono();
-        }
-        
-        
-           
+         try {     
+        if(jTCiudad.getText().trim().isEmpty() && jTApellido.getText().trim().isEmpty()){
+                 buscarContacto();
+             }else if(jTCiudad.getText().trim().isEmpty() && jTTelefono.getText().trim().isEmpty()){
+                 buscarTelefono();
+             }else if(jTTelefono.getText().trim().isEmpty() && jTApellido.getText().trim().isEmpty()){
+                 buscarContactos();
+                   }
+        } catch (NumberFormatException e) {
+        // Manejar error si los campos numéricos no contienen datos válidos
+        JOptionPane.showMessageDialog(null, "Complete el campo Apellido, Ciudad o Telefono, para Buscar");
+    }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
@@ -410,51 +411,89 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
         }
        }   catch (NumberFormatException e) {
         // Manejar error si el teléfono ingresado no es válido
-        JOptionPane.showMessageDialog(null, "Error al buscar contacto: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al buscar contacto, Falta completar los campos: " + e.getMessage());
         }
     }
     
-    //buscarTeléfono() que en base a un apellido nos devuelve un Set<Long> con los números
-    //de teléfono asociados a dicho apellido.
     private void buscarTelefono(){
         
         try {
-        // Obtener el número de teléfono ingresado
-        String apellido = jTApellido.getText();
-        Long telefono = Long.valueOf(jTTelefono.getText());
-       
-        // Buscar el contacto en el TreeMap
-      
-        Contacto contacto = contactos.get(apellido);
+        // Obtener el apellido ingresado
+        String apellidoBuscado = jTApellido.getText().trim();
 
-        if (contacto != null) {
-            // Mostrar los datos del contacto en los campos correspondientes
-            jTNombre.setText(contacto.getNombre());
-            jTDireccion.setText(contacto.getDireccion());
-            jTCiudad.setText(contacto.getCiudad());
-            jTdni.setText(contacto.getDni());
-            jTTelefono.setText(telefono.toString());
-            
+        // Verificar si se ingresó un apellido
+        if (apellidoBuscado.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese un apellido.");
+            return;
+        }
 
-            // Mostrar mensaje de éxito
-            JOptionPane.showMessageDialog(null, "Contacto encontrado.");
+        // Crear un StringBuilder para almacenar los resultados
+        StringBuilder resultado = new StringBuilder("Contactos asociados al apellido '" + apellidoBuscado + "':\n");
+
+        // Variable para verificar si se encontró algún contacto
+        boolean contactoEncontrado = false;
+
+        // Iterar sobre los contactos para encontrar aquellos con el apellido ingresado
+        for (Map.Entry<Long, Contacto> entry : contactos.entrySet()) {
+            Contacto contacto = entry.getValue();
+            if (contacto.getApellido().equalsIgnoreCase(apellidoBuscado)) {
+                // Agregar el número de teléfono, nombre y apellido al StringBuilder
+                resultado.append("Teléfono: ").append(entry.getKey())
+                         .append(", Nombre: ").append(contacto.getNombre())
+                         .append(", Apellido: ").append(contacto.getApellido()).append("\n");
+                contactoEncontrado = true;
+            }
+        }
+
+        // Verificar si se encontró algún contacto
+        if (contactoEncontrado) {
+            JOptionPane.showMessageDialog(null, resultado.toString());
         } else {
-            // Mostrar mensaje si no se encontró el contacto
-            JOptionPane.showMessageDialog(null, "No existe un contacto con el teléfono " + telefono + ".");
+            JOptionPane.showMessageDialog(null, "No se encontraron contactos con el apellido '" + apellidoBuscado + "'.");
         }
-       }   catch (NumberFormatException e) {
-        // Manejar error si el teléfono ingresado no es válido
-        JOptionPane.showMessageDialog(null, "Error al buscar contacto: " + e.getMessage());
-        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error al buscar teléfonos: " + e.getMessage());
+    }
     }
         
-        
-    
-    
-    //buscarContactos() que en base a una ciudad nos devuelve un ArrayList con los
-    //Contactos asociados a dicha ciudad
     private void buscarContactos(){
-        
+        try {
+        // Obtener el apellido ingresado
+        String ciudadBuscado = jTCiudad.getText().trim();
+
+        // Verificar si se ingresó un apellido
+        if (ciudadBuscado.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Por favor, ingrese una Ciudad.");
+            return;
+        }
+
+        // Crear un StringBuilder para almacenar los resultados
+        StringBuilder resultado = new StringBuilder("Contactos asociados a la Ciudad '" + ciudadBuscado + "':\n");
+
+        // Variable para verificar si se encontró algún contacto
+        boolean contactoEncontrado = false;
+
+        // Iterar sobre los contactos para encontrar aquellos con el apellido ingresado
+        for (Map.Entry<Long, Contacto> entry : contactos.entrySet()) {
+            Contacto contacto = entry.getValue();
+            if (contacto.getCiudad().equalsIgnoreCase(ciudadBuscado)) {
+                // Agregar la ciudad, nombre y apellido al StringBuilder
+                resultado.append("Teléfono: ").append(entry.getKey())
+                         .append(", Nombre: ").append(contacto.getNombre())
+                         .append(", Apellido: ").append(contacto.getApellido()).append("\n");
+                contactoEncontrado = true;
+            }
+        }
+
+        // Verificar si se encontró algún contacto
+        if (contactoEncontrado) {
+            JOptionPane.showMessageDialog(null, resultado.toString());
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron contactos con la ciudad '" + ciudadBuscado + "'.");
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error al buscar la ciudad: " + e.getMessage());
+    }
     }
 }
 
