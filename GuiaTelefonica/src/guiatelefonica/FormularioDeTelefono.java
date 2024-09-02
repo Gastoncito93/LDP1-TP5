@@ -14,7 +14,6 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
 
     public FormularioDeTelefono(TreeMap<Long, Contacto> contactos) {
         this.contactos = contactos;
-        this.
         initComponents();
         agregarContacto();
         buscarContacto();
@@ -242,11 +241,30 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jBNuevoActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-        buscarContacto();
+        
+        String apellido = jTApellido.getText();
+        Long telefono = Long.valueOf(jTTelefono.getText());
+        
+        Contacto contacto = contactos.get(apellido);
+        
+        if(contacto == null){
+            buscarContacto();
+        }else{
+            buscarTelefono();
+        }
+        
+        
+           
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
         agregarContacto();
+        jTdni.setText("");
+        jTNombre.setText("");
+        jTApellido.setText("");
+        jTDireccion.setText("");
+        jTCiudad.setText("");
+        jTTelefono.setText("");
     }//GEN-LAST:event_jBGuardarActionPerformed
 
     private void jBBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBorrarActionPerformed
@@ -390,16 +408,51 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
             // Mostrar mensaje si no se encontró el contacto
             JOptionPane.showMessageDialog(null, "No existe un contacto con el teléfono " + telefono + ".");
         }
-    } catch (NumberFormatException e) {
+       }   catch (NumberFormatException e) {
         // Manejar error si el teléfono ingresado no es válido
         JOptionPane.showMessageDialog(null, "Error al buscar contacto: " + e.getMessage());
-    }
+        }
     }
     
+    //buscarTeléfono() que en base a un apellido nos devuelve un Set<Long> con los números
+    //de teléfono asociados a dicho apellido.
     private void buscarTelefono(){
         
+        try {
+        // Obtener el número de teléfono ingresado
+        String apellido = jTApellido.getText();
+        Long telefono = Long.valueOf(jTTelefono.getText());
+       
+        // Buscar el contacto en el TreeMap
+      
+        Contacto contacto = contactos.get(apellido);
+
+        if (contacto != null) {
+            // Mostrar los datos del contacto en los campos correspondientes
+            jTNombre.setText(contacto.getNombre());
+            jTDireccion.setText(contacto.getDireccion());
+            jTCiudad.setText(contacto.getCiudad());
+            jTdni.setText(contacto.getDni());
+            jTTelefono.setText(telefono.toString());
+            
+
+            // Mostrar mensaje de éxito
+            JOptionPane.showMessageDialog(null, "Contacto encontrado.");
+        } else {
+            // Mostrar mensaje si no se encontró el contacto
+            JOptionPane.showMessageDialog(null, "No existe un contacto con el teléfono " + telefono + ".");
+        }
+       }   catch (NumberFormatException e) {
+        // Manejar error si el teléfono ingresado no es válido
+        JOptionPane.showMessageDialog(null, "Error al buscar contacto: " + e.getMessage());
+        }
     }
+        
+        
     
+    
+    //buscarContactos() que en base a una ciudad nos devuelve un ArrayList con los
+    //Contactos asociados a dicha ciudad
     private void buscarContactos(){
         
     }
