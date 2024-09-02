@@ -244,7 +244,7 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
     }//GEN-LAST:event_jBNuevoActionPerformed
 
     private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
-         try {     
+        /* try {     
         if(jTCiudad.getText().trim().isEmpty() && jTApellido.getText().trim().isEmpty()){
                  buscarContacto();
              }else if(jTCiudad.getText().trim().isEmpty() && jTTelefono.getText().trim().isEmpty()){
@@ -255,7 +255,29 @@ public class FormularioDeTelefono extends javax.swing.JFrame {
         } catch (NumberFormatException e) {
         // Manejar error si los campos numéricos no contienen datos válidos
         JOptionPane.showMessageDialog(null, "Complete el campo Apellido, Ciudad o Telefono, para Buscar");
-    }
+    }*/
+        boolean bapellido=true, bciudad=true, btelefono = true;
+        if(jTCiudad.getText().trim().isEmpty()){
+            bciudad=false;
+        }
+        if(jTApellido.getText().trim().isEmpty()){
+            bapellido=false;
+        }
+        if(jTTelefono.getText().trim().isEmpty()){
+            btelefono=false;
+        }
+        if(bciudad){
+            buscarContactos();
+        }
+        if (bapellido){
+            buscarTelefono();
+        }
+        if (btelefono){
+            buscarContacto();
+        }
+        if (btelefono==false && bapellido==false && bciudad==false) {
+            JOptionPane.showMessageDialog(null, "Complete el campo Apellido, Ciudad o Telefono, para Buscar");
+        }
     }//GEN-LAST:event_jBBuscarActionPerformed
 
     private void jBGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGuardarActionPerformed
