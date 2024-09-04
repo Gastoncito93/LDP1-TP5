@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="guiatelefonica">
+  <ClassDiagramComponents>
+    <Class name="Contacto" package="guiatelefonica" visibility="public" xPosition="80.0" yPosition="498.0">
+      <Fields>
+        <Field name="dni" type="String" visibility="private"/>
+        <Field name="nombre" type="String" visibility="private"/>
+        <Field name="apellido" type="String" visibility="private"/>
+        <Field name="ciudad" type="String" visibility="private"/>
+        <Field name="direccion" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="dni"/>
+          <Argument type="String" name="nombre"/>
+          <Argument type="String" name="apellido"/>
+          <Argument type="String" name="ciudad"/>
+          <Argument type="String" name="direccion"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getDni" returnType="String" visibility="public"/>
+        <Method name="getNombre" returnType="String" visibility="public"/>
+        <Method name="getApellido" returnType="String" visibility="public"/>
+        <Method name="getCiudad" returnType="String" visibility="public"/>
+        <Method name="getDireccion" returnType="String" visibility="public"/>
+        <Method name="setDni" returnType="void" visibility="public">
+          <Argument type="String" name="dni"/>
+        </Method>
+        <Method name="setNombre" returnType="void" visibility="public">
+          <Argument type="String" name="nombre"/>
+        </Method>
+        <Method name="setApellido" returnType="void" visibility="public">
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="setCiudad" returnType="void" visibility="public">
+          <Argument type="String" name="ciudad"/>
+        </Method>
+        <Method name="setDireccion" returnType="void" visibility="public">
+          <Argument type="String" name="direccion"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Directorio" package="guiatelefonica" visibility="public" xPosition="151.0" yPosition="65.0">
+      <Fields>
+        <Field name="contactos" type="TreeMap&lt;Long, Contacto&gt;" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="agregarContacto" returnType="void" visibility="public">
+          <Argument type="Long" name="telefono"/>
+          <Argument type="Contacto" name="contacto"/>
+        </Method>
+        <Method name="buscarContacto" returnType="Contacto" visibility="public">
+          <Argument type="Long" name="telefono"/>
+        </Method>
+        <Method name="buscarTelefono" returnType="Set&lt;Long&gt;" visibility="public">
+          <Argument type="String" name="apellido"/>
+        </Method>
+        <Method name="buscarContactos" returnType="ArrayList&lt;Contacto&gt;" visibility="public">
+          <Argument type="String" name="ciudad"/>
+        </Method>
+        <Method name="borrarContacto" returnType="void" visibility="public">
+          <Argument type="Long" name="telefono"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="FormularioDeTelefono" package="guiatelefonica" visibility="public" xPosition="782.0" yPosition="327.0">
+      <Fields>
+        <Field name="contactos" type="TreeMap&lt;Long, Contacto&gt;" visibility="private"/>
+        <Field name="jBBorrar" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jBBuscar" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jBGuardar" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jBNuevo" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jBSalir" type="javax.swing.JButton" visibility="private"/>
+        <Field name="jLabel1" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel2" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel3" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel4" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel5" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel6" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jLabel7" type="javax.swing.JLabel" visibility="private"/>
+        <Field name="jSeparator1" type="javax.swing.JSeparator" visibility="private"/>
+        <Field name="jTApellido" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jTCiudad" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jTDireccion" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jTNombre" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jTTelefono" type="javax.swing.JTextField" visibility="private"/>
+        <Field name="jTdni" type="javax.swing.JTextField" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="TreeMap&lt;Long, Contacto&gt;" name="contactos"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="initComponents" returnType="// &lt;editor-fold defaultstate=&quot;collapsed&quot; desc=&quot;Generated Code&quot;&gt;//GEN-BEGIN:initComponents void" visibility="private"/>
+        <Method name="jTNombreActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBNuevoActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBuscarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBGuardarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBBorrarActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="jBSalirActionPerformed" returnType="void" visibility="private">
+          <Argument type="java.awt.event.ActionEvent" name="evt"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String" name="args"/>
+        </Method>
+        <Method name="agregarContacto" returnType="void" visibility="private"/>
+        <Method name="borrarContacto" returnType="void" visibility="private"/>
+        <Method name="buscarContacto" returnType="void" visibility="private"/>
+        <Method name="buscarTelefono" returnType="void" visibility="private"/>
+        <Method name="buscarContactos" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="GuiaTelefonica" package="guiatelefonica" visibility="public" xPosition="647.0" yPosition="80.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="contactos" source="guiatelefonica.Directorio" target="guiatelefonica.Contacto" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="TreeMap&lt;Long, Contacto&gt;"/>
+    <UseRelation source="guiatelefonica.Directorio" target="guiatelefonica.Contacto" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="contactos" source="guiatelefonica.FormularioDeTelefono" target="guiatelefonica.Contacto" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="TreeMap&lt;Long, Contacto&gt;"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
