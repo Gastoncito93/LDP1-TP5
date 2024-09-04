@@ -15,6 +15,8 @@ public class Contacto {
         this.direccion = direccion;
     }
 
+  
+    
     public String getDni() { return dni; }
     public String getNombre() { return nombre; }
     public String getApellido() { return apellido; }
